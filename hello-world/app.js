@@ -1,5 +1,9 @@
 // const axios = require('axios')
 // const url = 'http://checkip.amazonaws.com/';
+"use strict";
+const AWS = require('aws-sdk');
+
+const db = new AWS.DynamoDB.DocumentClient();
 let response;
 
 /**
@@ -33,8 +37,11 @@ exports.lambdaHandler = async (event, context) => {
 };
 exports.addName = async (event, context) => {
     let response;
-    const { name } = JSON.parse(event.body); // fetch name property from POST request body
+    const name  = JSON.parse(event.body); // fetch name property from POST request body
     const id = Buffer.from(name).toString('base64'); // base64 name to get unique id
+
+console.log('------Name='+name );
+console.log('------id='+id );
 
     const params = {
         TableName: 'Names',
